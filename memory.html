@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="hu">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Memory játék Canvas-szal</title>
+</head>
+<body>
+  <canvas id="canvas" width="400" height="300"></canvas>
+  <script>
+  var canvas = document.getElementById("canvas");
+  var c = canvas.getContext('2d');
+
+var size = 60;
+var offset = 10;
+for (var i = 0; i < 5; i = i + 1) {
+  for (var j = 0; j < 4; j = j + 1) {
+    c.fillStyle = "gold";
+    fillStar(i * (size+offset), j * (size+offset), size);
+    c.fillStyle ="rgba(255, 255,  0, 1)";
+    c.fillRect(i * (size+offset), j * (size+offset), size, size);
+  }
+}
+
+function fillStar(x, y, s) {
+  c.beginPath();
+  c.moveTo(x, y + s * 0.4);
+  c.lineTo(x + s, y + s * 0.4);
+  c.lineTo(x + s * 0.15, y + s * 0.9);
+  c.lineTo(x + s / 2, y);
+  c.lineTo(x + s * 0.85, y + s * 0.9);
+  c.lineTo(x, y + s * 0.4);
+  c.fill();
+}
+
+  </script>
+</body>
+</html>
