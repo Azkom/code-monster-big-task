@@ -14,15 +14,33 @@
 
 var size = 60;
 var offset = 10;
-for (var i = 0; i < 5; i = i + 1) {
-  for (var j = 0; j < 4; j = j + 1) {
-    c.fillStyle = "gold";
-    fillStar(i * (size+offset), j * (size+offset), size);
-    c.fillStyle ="rgba(255, 255,  0, 1)";
-    c.fillRect(i * (size+offset), j * (size+offset), size, size);
-  }
+var sor = 4;
+var oszlop = 5;
+if ((sor*oszlop)%2){
+  console.log("Nem páros. Válassz új sor és oszlop értékeket!");
+  alert("Nem páros. Válassz új sor és oszlop értékeket!");
 }
-
+for (var i = 0; i < oszlop; i = i + 1) {
+  for (var j = 0; j < sor; j = j + 1) {
+    var piros = Math.floor(Math.random()*255);
+    var zold = Math.floor(Math.random()*255);
+    var kek = Math.floor(Math.random()*255);
+    //console.log(piros, zold, kek);
+    c.fillStyle = "rgb(" + piros +"," + zold + "," + kek +")";
+    //fillStar(i * (size+offset), j * (size+offset), size);
+    var x = i*(size+offset);
+    var y = j*(size+offset);
+    var star = new Star(x, y, size);
+    star.drawStar();
+    var alpha = 0.5;
+    var cardColor = "rgba(0, 87,  175," + alpha + ")";
+    // c.fillStyle = color;
+    var card = new MemoryCard(x, y, size, cardColor);
+    card.drawCard();
+    //c.fillRect(i*(size+offset), j*(size+offset), size, size);
+    }
+}
+// Függvény, ami megrajzolja a csillagot
 function fillStar(x, y, s) {
   c.beginPath();
   c.moveTo(x, y + s * 0.4);
@@ -32,6 +50,34 @@ function fillStar(x, y, s) {
   c.lineTo(x + s * 0.85, y + s * 0.9);
   c.lineTo(x, y + s * 0.4);
   c.fill();
+}
+// Star object constructor function
+function Star(x, y, s){
+  this.x = x;
+  this.y = y;
+  this.s = s;
+  this.drawStar = function() {
+  c.beginPath();
+  c.moveTo(this.x, this.y + this.s * 0.4);
+  c.lineTo(this.x + this.s, this.y + this.s * 0.4);
+  c.lineTo(this.x + this.s * 0.15, this.y + this.s * 0.9);
+  c.lineTo(this.x + this.s / 2, this.y);
+  c.lineTo(this.x + this.s * 0.85, this.y + this.s * 0.9);
+  c.lineTo(this.x, this.y + this.s * 0.4);
+  c.fill();
+}
+}
+// Memory Card object constructor function
+function MemoryCard(x, y, size, color){
+  this.x = x;
+  this.y = y;
+  this.size = size;
+  this.color = color;
+  this.drawCard = function(){
+    c.fillStyle = this.color;
+    c.fillRect(this.x, this.y, this.size, this.size);
+  }
+
 }
 
   </script>

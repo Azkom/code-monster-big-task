@@ -1,0 +1,58 @@
+﻿<!DOCTYPE html>
+<html lang="hu">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<meta http-equiv="X-UA-Compatible" content="ie=edge">
+	<title>Document</title>
+</head>
+<body>
+<canvas id="canvas" width="800" height="600"></canvas>	
+<script>
+	var canvas = document.getElementById("canvas");
+	var c = canvas.getContext('2d');
+	c.fillStyle ="yellow";
+	c.fillRect(30, 30, 100, 100);
+</script>
+</body>
+</html>
+{ message: "Kezdjük el használni azt, amit tanultál. Most elkezdünk egy nagy feladatot, amit lépésről lépésre oldunk meg közösen, a tanultak alapján. A megjegyzések alapján írd be az üres helyre a kódot. ",
+		  code: "// Rajzolj egy  téglalapot ami a hátteret adja!\n// A rajzolásnál a c.fillRect(x, y, width, height);\n// utasítást használd.\n// A téglalap a bal felső sarokban kezdődik.\n// A width értéke 400, a height értéke 300 legyen.\n\n\n// Rajzolj egy játékost is a c.fillRect() utasítással!\n// A játékos téglalap 20 széles és 80 magas.\n// A bal szélétől 20-ra van és függőlegesen középen\n// helyezkedik el.\n// A játkos színe fehér.\n// Tipp: a fillStyle = \"white\"; állítja be a színt.\n",
+		  lessonSection: "Nagy feladat: háttér és játékos",
+		},
+		{ message: "Valami hasonlót kaptál?",
+		  code: "// Rajzolj egy  téglalapot ami a hátteret adja.\n// A rajzolásnál a c.fillRect(x, y, width, height);\n// utasítást használd.\n// A téglalap a bal felső sarokban kezdődik.\n// A width értéke 400, a height értéke 300 legyen.\nc.fillRect(0, 0, 400, 300);\n// Rajzolj egy játékost is a c.fillRect() utasítással!\n// A játékos téglalap 20 széles és 80 magas.\n// A bal szélétől 20-ra van és függőlegesen középen\n// helyezkedik el.\n// A játkos színe fehér.\n// Tipp: a fillStyle = \"white\"; állítja be a színt.\nc.fillStyle =\"white\";\nc.fillRect(20, 115, 20, 80);\n",
+		},
+  { message: "A háttér és a játékos esetében a számokat írd át változókra.A háttér esetében a változók neve a következő legyen sorban: bg_x, bg_y, bg_w, bg_h, az étékük sorban 0, 0, 400, 300. A játékos esetében a változók neve sorban a következő legyen: player_x, player_y, player_w és player_h. A játékos 20 széles és 80 magas. A játékos 20-ra van a bal széltől és középen van. A player_y-t számítsd ki!  ",
+		   code: "// Hozd létre a háttér változókat!\n// A változók neve: bg_x, bg_y, bg_w, bg_h.\n// A változók értéke 0, 0, 400, 300.\n\n\n\n\nc.fillRect(0, 0, 400, 300);\n// Hozd létre a játékos változókat!\n// A játékos változók sorban: player_x, player_y,\n// player_w, player_h.\n\n\n\n\nc.fillStyle = \"white\";\nc.fillRect(20, 115, 20, 80);\n",
+		  lessonSection: "Nagy feladat: változók és műveleti jelek",
+		},
+		{ message: "Valami hasonlót kaptál?",
+  	code: "// Hozd létre a háttér változókat!\n// A változók neve: bg_x, bg_y, bg_w, bg_h.\n// A változók értéke 0, 0, 400, 300.\nvar bg_x= 0;\nvar bg_y= 0;\nvar bg_w= 400;\nvar bg_h= 300;\nc.fillRect(bg_x, bg_y, bg_w, bg_h);\n// Hozd létre a játékos változókat!\n// A játékos változók sorban: player_x, player_y,\n// player_w, player_h.\nvar player_x = 20;\nvar player_w = 20;\nvar player_h = 80;\nvar player_y = bg_h*0.5 - player_h*0.5;\nc.fillStyle = \"white\";\nc.fillRect(player_x, player_y, player_w, player_h);\n",
+		},
+ { message: "A háttér és a játékos készen van. A mostani feladatrészben két feladat lesz: a második játékos és a felező vonal megrajzolása. A második játékos változói sorban: mplayer_x, mplayer_y, mplayer_w és mplayer_h. A második játékos is 20 széles és 80 magas. A játékos 20-ra van a jobb széltől és szintén középen van.",
+		 code: "var bg_x= 0;\nvar bg_y= 0;\nvar bg_w= 400;\nvar bg_h= 300;\nc.fillRect(bg_x, bg_y, bg_w, bg_h);\nvar player_x = 20;\nvar player_w = 20;\nvar player_h = 80;\nvar player_y = bg_h*0.5 - player_h*0.5;\nc.fillStyle = \"white\";\nc.fillRect(player_x, player_y, player_w, player_h);\n// Hozd létre a játékos változókat!\n// A játékos változók sorban: mplayer_x, mplayer_y,\n// mplayer_w, mplayer_h.\n",
+		 lessonSection: "Nagy feladat 3: For ciklus használata",
+		},
+		{ message: "Valami hasonlót kaptál?",
+  	code: "var bg_x= 0;\nvar bg_y= 0;\nvar bg_w= 400;\nvar bg_h= 300;\nc.fillRect(bg_x, bg_y, bg_w, bg_h);\nvar player_x = 20;\nvar player_w = 20;\nvar player_h = 80;\nvar player_y = bg_h*0.5 - player_h*0.5;\nc.fillStyle = \"white\";\nc.fillRect(player_x, player_y, player_w, player_h);\n// Hozd létre a játékos változókat!\n// A játékos változók sorban: mplayer_x, mplayer_y,\n// mplayer_w, mplayer_h.\nvar mplayer_x = bg_w-20*2;\nvar mplayer_w = 20;\nvar mplayer_h = 80;\nvar mplayer_y = player_y;\nc.fillRect(mplayer_x, mplayer_y, mplayer_w, mplayer_h);",
+		},
+		{ message: "Kész van a második játékos. Most rajzold meg a felezővonalat szaggatott vonallal. A szaggatott vonal téglalapjai szélessége(hl_w) 4, magassága(hl_h) a step fele. A szaggatott vonal osztása (step) a háttér magasságának(bg_h) 30-ad része. Tipp: A for(var i; i< condition; i++){} ciklus segít a feladat megoldásában ",
+  	code: "var bg_x= 0;\nvar bg_y= 0;\nvar bg_w= 400;\nvar bg_h= 300;\nc.fillRect(bg_x, bg_y, bg_w, bg_h);\nvar player_x = 20;\nvar player_w = 20;\nvar player_h = 80;\nvar player_y = bg_h*0.5 - player_h*0.5;\nc.fillStyle = \"white\";\nc.fillRect(player_x, player_y, player_w, player_h);\nvar mplayer_x = bg_w-20*2;\nvar mplayer_w = 20;\nvar mplayer_h = 80;\nvar mplayer_y = player_y;\nc.fillRect(mplayer_x, mplayer_y, mplayer_w, mplayer_h);// Hozd létre a felezővonal változókat!\n// A felezővonal változók sorban: szélesség hl_w, magasság hl_h, lépésköz step.\n\n\n\n// Rajzold meg egy for ciklussal.\n",
+		},
+		{ message: "Valami hasonlót kaptál?",
+  	code: "var bg_x= 0;\nvar bg_y= 0;\nvar bg_w= 400;\nvar bg_h= 300;\nc.fillRect(bg_x, bg_y, bg_w, bg_h);\nvar player_x = 20;\nvar player_w = 20;\nvar player_h = 80;\nvar player_y = bg_h*0.5 - player_h*0.5;\nc.fillStyle = \"white\";\nc.fillRect(player_x, player_y, player_w, player_h);\n// Hozd létre a játékos változókat!\n// A játékos változók sorban: mplayer_x, mplayer_y,\n// mplayer_w, mplayer_h.\nvar mplayer_x = bg_w-20*2;\nvar mplayer_w = 20;\nvar mplayer_h = 80;\nvar mplayer_y = player_y;\nc.fillRect(mplayer_x, mplayer_y, mplayer_w, mplayer_h);\nvar hl_w =4;var step = bg_h/30;\nvar hl_h = step*0.5;\nvar hl_x =bg_w*0.5- hl_w*0.5;\n// Rajzold meg egy for ciklussal.\nfor(var i= 0; i < bg_h; i++){\n var hl_y =0 + i*step;\nc.fillRect(hl_x, hl_y, hl_w, hl_h);\n}\n",
+		},
+	{ message: "A háttér és a játékos készen van. A mostani feladatrészben két feladat lesz: a második játékos és a felező vonal megrajzolása. A második játékos változói sorban: mplayer_x, mplayer_y, mplayer_w és mplayer_h. A második játékos is 20 széles és 80 magas. A játékos 20-ra van a jobb széltől és szintén középen van.",
+		 code: "var bg_x= 0;\nvar bg_y= 0;\nvar bg_w= 400;\nvar bg_h= 300;\nc.fillRect(bg_x, bg_y, bg_w, bg_h);\nvar player_x = 20;\nvar player_w = 20;\nvar player_h = 80;\nvar player_y = bg_h*0.5 - player_h*0.5;\nc.fillStyle = \"white\";\nc.fillRect(player_x, player_y, player_w, player_h);\n// Hozd létre a játékos változókat!\n// A játékos változók sorban: mplayer_x, mplayer_y,\n// mplayer_w, mplayer_h.\n",
+		 lessonSection: "Nagy feladat 3: Függvények",
+		},
+		{ message: "Valami hasonlót kaptál?",
+  	code: "var bg_x= 0;\nvar bg_y= 0;\nvar bg_w= 400;\nvar bg_h= 300;\nc.fillRect(bg_x, bg_y, bg_w, bg_h);\nvar player_x = 20;\nvar player_w = 20;\nvar player_h = 80;\nvar player_y = bg_h*0.5 - player_h*0.5;\nc.fillStyle = \"white\";\nc.fillRect(player_x, player_y, player_w, player_h);\n// Hozd létre a játékos változókat!\n// A játékos változók sorban: mplayer_x, mplayer_y,\n// mplayer_w, mplayer_h.\nvar mplayer_x = bg_w-20*2;\nvar mplayer_w = 20;\nvar mplayer_h = 80;\nvar mplayer_y = player_y;\nc.fillRect(mplayer_x, mplayer_y, mplayer_w, mplayer_h);",
+		},
+		{ message: "Kész van a második játékos. Most rajzold meg a felezővonalat szaggatott vonallal. A szaggatott vonal téglalapjai szélessége(hl_w) 4, magassága(hl_h) a step fele. A szaggatott vonal osztása (step) a háttér magasságának(bg_h) 30-ad része. Tipp: A for(var i; i< condition; i++){} ciklus segít a feladat megoldásában ",
+  	code: "var bg_x= 0;\nvar bg_y= 0;\nvar bg_w= 400;\nvar bg_h= 300;\nc.fillRect(bg_x, bg_y, bg_w, bg_h);\nvar player_x = 20;\nvar player_w = 20;\nvar player_h = 80;\nvar player_y = bg_h*0.5 - player_h*0.5;\nc.fillStyle = \"white\";\nc.fillRect(player_x, player_y, player_w, player_h);\nvar mplayer_x = bg_w-20*2;\nvar mplayer_w = 20;\nvar mplayer_h = 80;\nvar mplayer_y = player_y;\nc.fillRect(mplayer_x, mplayer_y, mplayer_w, mplayer_h);// Hozd létre a felezővonal változókat!\n// A felezővonal változók sorban: szélesség hl_w, magasság hl_h, lépésköz step.\n\n\n\n// Rajzold meg egy for ciklussal.\n",
+		},
+		{ message: "Valami hasonlót kaptál?",
+  	code: "var bg_x= 0;\nvar bg_y= 0;\nvar bg_w= 400;\nvar bg_h= 300;\nc.fillRect(bg_x, bg_y, bg_w, bg_h);\nvar player_x = 20;\nvar player_w = 20;\nvar player_h = 80;\nvar player_y = bg_h*0.5 - player_h*0.5;\nc.fillStyle = \"white\";\nc.fillRect(player_x, player_y, player_w, player_h);\n// Hozd létre a játékos változókat!\n// A játékos változók sorban: mplayer_x, mplayer_y,\n// mplayer_w, mplayer_h.\nvar mplayer_x = bg_w-20*2;\nvar mplayer_w = 20;\nvar mplayer_h = 80;\nvar mplayer_y = player_y;\nc.fillRect(mplayer_x, mplayer_y, mplayer_w, mplayer_h);\nvar hl_w =4;var step = bg_h/30;\nvar hl_h = step*0.5;\nvar hl_x =bg_w*0.5- hl_w*0.5;\n// Rajzold meg egy for ciklussal.\nfor(var i= 0; i < bg_h; i++){\n var hl_y =0 + i*step;\nc.fillRect(hl_x, hl_y, hl_w, hl_h);\n}\n",
+		},

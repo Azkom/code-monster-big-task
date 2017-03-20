@@ -1,58 +1,314 @@
-﻿<!DOCTYPE html>
-<html lang="hu">
-<head>
-	<meta charset="UTF-8">
-	<meta name="viewport" content="width=device-width, initial-scale=1.0">
-	<meta http-equiv="X-UA-Compatible" content="ie=edge">
-	<title>Document</title>
-</head>
-<body>
-<canvas id="canvas" width="800" height="600"></canvas>	
-<script>
-	var canvas = document.getElementById("canvas");
-	var c = canvas.getContext('2d');
-	c.fillStyle ="yellow";
-	c.fillRect(30, 30, 100, 100);
-</script>
-</body>
+<!doctype html>
+<html lang=en>
+  <head>
+	<meta charset=utf-8>
+    <title>Code Monster from Crunchzilla</title>
+	<link rel=icon type="image/png" href=i/favicon.png>
+	<link rel="shortcut icon" href=i/favicon.ico>
+
+    <link rel=stylesheet href=thirdparty/codemirror.css>
+    <link rel=stylesheet href=thirdparty/speechbubble.css>
+	<link rel=stylesheet href=codemonster.css>
+
+	<meta property="og:title" content="Code Monster from Crunchzilla" />
+	<meta property="og:url" content="http://www.crunchzilla.com/code-monster" />
+    <meta property="og:image" content="http://www.crunchzilla.com/i/monster2.png" />
+	<meta property="og:description" content="Code Monster gets kids excited about programming. It is a combination of a game and tutorial where kids experiment with learning to code." />
+	<meta name="description" content="Code Monster gets kids excited about programming. It is a combination of a game and tutorial where kids experiment with learning to code." />
+  </head>
+
+  <body>
+
+	<noscript>
+	  <h2>
+	    Code Monster izgalomba hozza a gyerekeket a programozás iránt. Ez egy
+			kombinációja a játéknak és az oktatásnak,ahol a gyerekek kísérltezve
+			tanulnak kódolni.
+	    <p>
+	    Code Monster  Javascript-et használ.  Engedélyezd a böngészőben a Javascript-et,
+			ha játszani szeretnél a Code Monster-rel .  Egyébként, Code
+	    Monster nem képes veled játszani.
+	    <br><br><br>
+	  </h2>
+	</noscript>
+	<div class=not-selectable unselectable=on id=tutor>
+	  <div id=tutor-avatar unselectable=on><img id=tutor-img unselectable=on src=i/tutor0.png /></div>
+	  <div id=tutor-talk unselectable=on>
+				<p class="speech-bubble-green" unselectable=on id=tutor-message> </p>
+	  </div>
+	</div>
+
+	<div id=code-errors class=not-selectable unselectable=on></div>
+
+	<div class=not-selectable unselectable=on style="overflow:hidden;">
+    <textarea id=code name=code></textarea>
+    <iframe id=preview></iframe>
+	</div>
+
+	<div class=not-selectable unselectable=on style="overflow: hidden; width: 100%;">
+	  <div style="float: left; width: 100px;">
+		<span class="button not-selectable" title="Reset the code of this lesson" unselectable=on id=reset-button>TÖRLÉS</span>
+	  </div>
+	  <div style="float: left; margin-left: 100px; margin-top: 2px; width: 400px; text-align: center;">
+		<span id=lesson-section></span>
+	  </div>
+	  <div style="float: right;">
+		<span id=lesson-number style="display: none;">Lesson 1</span>
+		<span class="button not-selectable" title="Go back one lesson" style="margin-right:10px;" unselectable=on id=back-button>VISSZA</span>
+      </div>
+	</div>
+	<div class=not-selectable unselectable=on style="overflow: hidden; width: 100%; line-height: 10px;">
+	  <div style="text-align: center;">
+		<progress id=lesson-progress max=100 value=0 title="0% completed"></progress>
+	  </div>
+	</div>
+	<div id=info-links class=not-selectable unselectable=on>
+	  <span class=info-link unselectable=on>Hogyan játszhatsz</span>
+	  |
+	  <span class=info-link unselectable=on>Lecke szekciók</span>
+	  |
+	  <span class=info-link unselectable=on>About</span>
+	  |
+	  <span class=info-link unselectable=on>GYIK</span>
+	  |
+	  <span class=info-link unselectable=on>Terms of Use</span>
+	  |
+	  <span class=info-link unselectable=on>Privacy</span>
+	  |
+	  <span class=info-link unselectable=on>Contact</span>
+	  |
+	  <span unselectable=on>&copy; 2015</span>
+	</div>
+
+	<div id=hogyan-játszhatsz style="display: none;">
+	  <h3>Hogyan játszhatsz?</h3>
+	  Code Monster megtanítja a gyerekeket és a felnőtteket egy kicsit a Javascript programozásra!
+	  <br><br>
+	  Könnyű játszani. Kövesd az utasításokat és csináld azt, amit a Code
+	  Monster mond.  Ha megakadtál, csak ugorj a következő leckére.
+	  Bármikor visszatérhetsz ide később!
+	  <br><br>Klikkelj a Törlés gombra, ha tényleg összekeverted a kódod,
+		és újra szeretnéd kezdeni a leckét. Klikkelj a Vissza gombra, hogy visszalépj
+		a korábbi leckére. Egy adott leckére tudsz ugrani, vagy vissza tudsz ugrani a kezdésre
+		a "Lesson Sections" hivatkozás (link) használatával.
+	  <br><br>
+	  Code Monster megjegyzi a leckét,  ahol vagy,  bármikor nyugodtan  megállhatsz
+		és később visszatérhetsz.  Mindaddig, amig te visszatérsz és ugyanazon a gépen,
+		ugyanazt a böngészőt használod, akkor visszatérhetsz ugyanahhoz a leckéhez.
+	  <br><br>
+	  Jó szórakozást!
+	  <div class="simplemodal-close simplemodal-closex">X</div>
+	</div>
+	<div id=lecke-szekciók style="display: none;">
+	  <h3>Ugrás a Lecke szekció részre</h3>
+	  <ol id=lesson-sections-list>
+	  </ol>
+	  <div class="simplemodal-close simplemodal-closex">X</div>
+	</div>
+	<div id=about style="display: none;">
+	  <h3>About</h3>
+    Code Monster from Crunchzilla is an interactive tutorial for kids
+	  that focuses on action.  Code changes immediately yield
+	  visible results.
+	  <br><br>
+	  Projects start with simple boxes and colors, rapidly progressing
+	  into exciting experiments with simple animation and
+	  fractals. Important programming concepts like variables, loops,
+	  conditionals, expressions, and functions are introduced
+	  by example.
+	  <br><br>
+	  Code Monster is a gentle and fun introduction to
+	  programming concepts.  It is a first step in learning to program. It is
+	  not intended to teach all of computer science and programming.
+	  <br><br>
+	  Code Monster is based in Seattle, WA.  It is part of the
+	  Crunchzilla suite of game and educational projects developed by
+	  Geeky Ventures.
+	  <div class="simplemodal-close simplemodal-closex">X</div>
+	</div>
+	<div id=gyik style="display: none;">
+	  <h3>Gyakran Ismétlődő Kérdések</h3>
+	  <b>Mi a c a darabokban, mint a <code>c.save()</code>?</b>
+	  <br><br>
+	  Ez egy kicsit technikai de, ha tudni akarod a részleteket, a <code>c</code> egy változó Code Monster hozta létre neked, aemly tartalmazza a Canvas(Vászon) 2D összefüggéseit.
+	  A kód amely létrehozza a  <code>c</code> változót, amely rejtett, valahogy így néz ki
+	  <br><br>
+	  <code>var c = document.getElementById('pane').getContext('2d');</code>
+	  <br><br>
+	  <b>Hogyan tudom menteni a saját kódomat és felhasználni a Code Monsteren kívül?</b>
+	  <br><br>
+	  Rövid válasz: Ez nem nagyon könnyű, de másolhatod és mozgathatod  a kódodat és azután betöltheted egy
+	  HTML fájlba (akár betötlheted egy különálló Javascript fájlba akár inline 
+		Javascript-ként  a HTML fájlodba ).
+	  <br><br>
+	  Hosszabb válasz: Egy minimális HTML, amely működik így nézhet ki, mint ez:
+	  <br><br>
+	  <code>
+		&lt;html&gt;&lt;body&gt;
+		<br>
+		&lt;canvas id=pane width=400 height=300&gt;&lt;/canvas&gt;
+		<br>
+		&lt;script&gt;
+		<br>
+		var c = document.getElementById(&#39;pane&#39;).getContext(&#39;2d&#39;);
+		<br>
+		<br>
+		// ILLESZD BE A SAJÁT KÓDODAT IDE
+		<br>
+		<br>
+		&lt;/script&gt;&lt;/body&gt;&lt;/html&gt;</code>
+	  <br><br>
+	  Ha ezt bemásolod egy fájlba, majd másolod és beilleszted a kódodat ebbe, majd a fájlt elmented 
+		egy .html-re végződő fájlnéven, be tudod tölteni a fájlt bármelyik böngészőbe.
+	  <br><br>
+	  <b>Van még bármilyen kód, ami rejtett előttem?</b>
+	  <br><br>
+		Van még egy pici rejtett kód azért, hogy megpróbáljuk megállítani az animációt, amikor 
+		leckét váltasz és a kód, amit írsz úgy hangszereli, hogy megpróbálja megvédni a 
+		végtelen hurokoktól. Ezek nem szükségesek neked, hogy a kódot a Code Monsteren kívül futtasd.
+	  <br><br>
+	  <b>Miért nem mondasz többet a Javascript szintaktikáról és a fogalom meghatározásokról?</b>
+	  <br><br>
+		Már számos oktatóprogram és könyv áll rendelkezésre arra, hogy megtanítsák a Javascript programozást
+		elmagyarázva, hogy mi a változó, mi az érvényessége, terjedelme, hogy néz ki a szintaktikája 
+		az if kifejezésnek, hogyan működnek egyes műveleti jelek, és így tovább. Ha ezt akarod,
+		számos lehetőség elérhető, számos ezek közül nagyon jó kiegészítóje a Code Monsternek.
+	  <br><br>
+		Amit nehéz megtalálni az egy oktatóprogram, ami mókás, magával ragadó, és lehetőséget kapsz, 
+		hogy azonnal király dolgokjat építhess. Code Monster átugrik számos szintaktikát és magyarázatot,
+		amiket te megkaphatsz máshol (használd a Google-t arre, amikor szükséges) és helyette egyenesen 
+		beleugrik a szóratkoztató részbe, amit te csinálhatsz akkor, ha programozni tanulsz.
+	  <br><br>
+	  <b>Miért nem működik ez tökéletesen egy iPaden (vagy másik mobil eszközön)?</b>
+	  <br><br>
+	  Code Monstert betölti számos mobil eszköz, még egy kicsit játszható is
+		függően az eszköztől, de ez nem igazán mobilra tervezett. Miért nem?
+		<br><br>
+		Leginkább amiatt, mert mobilon nehéz gépelni. Nagy terjedelem írása egy mobil
+    eszközön nehéz, és ez még rosszabb, amikor az amit írni próbálsz az egy kód
+		és neked figyelni kell a kód egyéb részeire is.Nagy terjedelmű hagyományos kódot próbálsz
+		egy mobil eszközön írni, az nem egy jó gyakorlás. 
+	  <br><br>
+	  Részben ez az oka annak, hogy úgy tűnik még senki sem hozott létre egy alkalmazást arra, hogy 
+		kódot tanulj mobilon, de vannak jó alkalmazások arra, hogy  programozási
+		koncepciókat tanítsanak (úgy mint a Hopscotch, a Move the Turtle, és a Cargo-bot).
+	  <br><br>
+	  <b>Tudom offline használni a Code Monstert (amikor nem kapcsolódom az Internethez)?</b>
+	  <br><br>
+	  Természetesen!  Code Monster az internetet csak a legelején
+		használja, hogy betöltse a weboldalt, és azután sohasem használja az 
+		internetet ismét. 
+	  <br><br>
+	  Így , például, betöltheted a Code Monstert egy laptopra, 
+		azután beszállhatsz egy repülőgépbe vagy kisétálhatsz egy parkba,
+		ahol nincs internet kapcsolat, nyisd ki a ott a laptopot, és használd
+		a Code Monstert internet nélkül. Ez még elmenti a helyedet, így
+		te visszatérhetsz ugyanahhoz a leckéhez, amikor visszatérsz! Nem szükséges
+	  egy internet kapcsolat, kivéve a legelején, amikor a weblapot betölti.
+	  <br><br>
+	  <div class="simplemodal-close simplemodal-closex">X</div>
+	</div>
+	<div id=terms-of-use style="display: none;">
+	  <h3>Terms of Use</h3>
+	  Code Monster from Crunchzilla is a website provided by Geeky Ventures.
+	  In order to use the Site, you must accept the terms set forth below.
+	  If you are a minor, your parent or guardian must accept the terms and
+	  full responsibility for your use of the website.  THESE TERMS OF
+	  SERVICE CONSTITUTE A BINDING LEGAL AGREEMENT BETWEEN YOU AND GEEKY
+	  VENTURES.  BY USING THE WEBSITE, YOU AGREE TO THESE TERMS.
+	  <br><br>
+	  The website HTML, text, images, audio, video, software or other
+	  content that is made available on this website are the property of
+	  Geeky Ventures or its content suppliers.  Before you use this content
+	  in some way please take care to ensure that you have the relevant
+	  rights and permissions.  You are welcome to display on your computer,
+	  download, and print pages from this website for personal and educational
+	  use only.
+	  <br><br>
+	  THE WEBSITE IS PROVIDED "AS IS".  Your use of this website is at your
+	  own risk.  Geeky Ventures disclaims all warranties, expressed or
+	  implied, including without limitation, warranties of merchantability
+	  and fitness of a particular purpose.  Geeky Ventures disclaims
+	  liability for any direct, indirect, incidental, special,
+	  consequential, exemplary, punitive or other damages, or lost profits,
+	  that may result directly or indirectly from the use of the
+	  website. This includes, without limitation, any damage to computer
+	  systems, hardware or software, loss of data, or any other performance
+	  failures, any errors, bugs, viruses or other defects that result from,
+	  or are associated with the use of this website.
+	  <br><br>
+	  Geeky Ventures may modify this agreement at any time, and such
+	  modifications shall be effective immediately.
+	  <div class="simplemodal-close simplemodal-closex">X</div>
+	</div>
+	<div id=privacy style="display: none;">
+	  <h3>Privacy Policy</h3>
+
+	  Code Monster is extremely protective of privacy.  Code Monster
+	  keeps almost no information about people who use the website.
+	  <br><br>
+	  Code Monster does not require registration.  It does not have
+	  your e-mail address.  It does not know who you are.  When you
+	  use Code Monster, you are essentially anonymous.
+	  <br><br>
+	  Code Monster does not use cookies.  If you leave the website and
+	  come back, there is a feature that will get you back to the
+	  lesson you were on.  That does not use cookies.  It is done
+	  using HTML5 Local Storage, which stores data on your machine,
+	  not remotely on the webservers.  Code Monster does not even know
+	  what lesson you were on or how many lessons people using Code
+	  Monster have completed, and it is a bit of a shame that we do
+	  not, but that is how seriously we take privacy.
+	  <br><br>
+	  Like nearly all websites, Code Monster has web server logs that
+	  may contain the IP address used to access the web server.  That
+	  is standard in nearly all webservers and not an attempt at data
+	  collection.
+	  <br><br>
+	  In keeping with standard language in privacy policies,
+	  personally identifiable information will not be disclosed to a
+	  third party unless required by law and we may update this policy
+	  from time to time at our sole discretion.
+	  <br><br>
+	  We are very protective of your privacy.  We like it that way.
+	  <div class="simplemodal-close simplemodal-closex">X</div>
+	</div>
+	<div id=contact style="display: none;">
+	  <h3>Contact</h3>
+	  Code Monster can be reached at monster@crunchzilla.com
+	  <br><br>
+	  Code Monster would love to hear your suggestions for how he can
+	  teach better.  Code Monster no like complaints, but you can send
+	  them to Code Monster too, and he'll eat them up -- yum, yum! -- with
+	  his big nasty pointy teeth.
+	  <br><br>
+	  Code Monster from Crunchzilla is a product of Geeky Ventures.
+	  Geeky Ventures is based in Seattle, WA.
+	  <div class="simplemodal-close simplemodal-closex">X</div>
+	</div>
+
+	<div id=old-browser-warning style="display: none;">
+	  <h3>Old Browser Warning</h3>
+	  Oh my.  Code Monster no like your web browser.  Your browser
+	  old.  You need new browser.
+	  <br><br>
+	  Code Monster like <a href="http://google.com/chrome">Chrome</a>
+	  and <a href="http://mozilla.com/firefox">Firefox</a>.  You can
+	  play with Code Monster with those.  Go get 'em and let's play!
+	  <br><br>
+	  If you want to try to use Code Monster anyway, go ahead and try, but
+	  Code Monster probably no come out to play.  Your web browser
+	  scary.  Me no likey.
+	  <div class="simplemodal-close simplemodal-closex">X</div>
+	</div>
+
+    <script src=thirdparty/codemirror.js></script>
+    <script src=thirdparty/codemirror-javascript.js></script>
+    <script src=thirdparty/jshint.js></script>
+	<script src=thirdparty/jquery-1.7.2.min.js></script>
+	<script src=thirdparty/jquery.simplemodal.1.4.2.min.js></script>
+	<script src=codemonster-lessons.js></script>
+	<script src=codemonster.js></script>
+
+  </body>
 </html>
-{ message: "Kezdjük el használni azt, amit tanultál. Most elkezdünk egy nagy feladatot, amit lépésről lépésre oldunk meg közösen, a tanultak alapján. A megjegyzések alapján írd be az üres helyre a kódot. ",
-		  code: "// Rajzolj egy  téglalapot ami a hátteret adja!\n// A rajzolásnál a c.fillRect(x, y, width, height);\n// utasítást használd.\n// A téglalap a bal felső sarokban kezdődik.\n// A width értéke 400, a height értéke 300 legyen.\n\n\n// Rajzolj egy játékost is a c.fillRect() utasítással!\n// A játékos téglalap 20 széles és 80 magas.\n// A bal szélétől 20-ra van és függőlegesen középen\n// helyezkedik el.\n// A játkos színe fehér.\n// Tipp: a fillStyle = \"white\"; állítja be a színt.\n",
-		  lessonSection: "Nagy feladat: háttér és játékos",
-		},
-		{ message: "Valami hasonlót kaptál?",
-		  code: "// Rajzolj egy  téglalapot ami a hátteret adja.\n// A rajzolásnál a c.fillRect(x, y, width, height);\n// utasítást használd.\n// A téglalap a bal felső sarokban kezdődik.\n// A width értéke 400, a height értéke 300 legyen.\nc.fillRect(0, 0, 400, 300);\n// Rajzolj egy játékost is a c.fillRect() utasítással!\n// A játékos téglalap 20 széles és 80 magas.\n// A bal szélétől 20-ra van és függőlegesen középen\n// helyezkedik el.\n// A játkos színe fehér.\n// Tipp: a fillStyle = \"white\"; állítja be a színt.\nc.fillStyle =\"white\";\nc.fillRect(20, 115, 20, 80);\n",
-		},
-  { message: "A háttér és a játékos esetében a számokat írd át változókra.A háttér esetében a változók neve a következő legyen sorban: bg_x, bg_y, bg_w, bg_h, az étékük sorban 0, 0, 400, 300. A játékos esetében a változók neve sorban a következő legyen: player_x, player_y, player_w és player_h. A játékos 20 széles és 80 magas. A játékos 20-ra van a bal széltől és középen van. A player_y-t számítsd ki!  ",
-		   code: "// Hozd létre a háttér változókat!\n// A változók neve: bg_x, bg_y, bg_w, bg_h.\n// A változók értéke 0, 0, 400, 300.\n\n\n\n\nc.fillRect(0, 0, 400, 300);\n// Hozd létre a játékos változókat!\n// A játékos változók sorban: player_x, player_y,\n// player_w, player_h.\n\n\n\n\nc.fillStyle = \"white\";\nc.fillRect(20, 115, 20, 80);\n",
-		  lessonSection: "Nagy feladat: változók és műveleti jelek",
-		},
-		{ message: "Valami hasonlót kaptál?",
-  	code: "// Hozd létre a háttér változókat!\n// A változók neve: bg_x, bg_y, bg_w, bg_h.\n// A változók értéke 0, 0, 400, 300.\nvar bg_x= 0;\nvar bg_y= 0;\nvar bg_w= 400;\nvar bg_h= 300;\nc.fillRect(bg_x, bg_y, bg_w, bg_h);\n// Hozd létre a játékos változókat!\n// A játékos változók sorban: player_x, player_y,\n// player_w, player_h.\nvar player_x = 20;\nvar player_w = 20;\nvar player_h = 80;\nvar player_y = bg_h*0.5 - player_h*0.5;\nc.fillStyle = \"white\";\nc.fillRect(player_x, player_y, player_w, player_h);\n",
-		},
- { message: "A háttér és a játékos készen van. A mostani feladatrészben két feladat lesz: a második játékos és a felező vonal megrajzolása. A második játékos változói sorban: mplayer_x, mplayer_y, mplayer_w és mplayer_h. A második játékos is 20 széles és 80 magas. A játékos 20-ra van a jobb széltől és szintén középen van.",
-		 code: "var bg_x= 0;\nvar bg_y= 0;\nvar bg_w= 400;\nvar bg_h= 300;\nc.fillRect(bg_x, bg_y, bg_w, bg_h);\nvar player_x = 20;\nvar player_w = 20;\nvar player_h = 80;\nvar player_y = bg_h*0.5 - player_h*0.5;\nc.fillStyle = \"white\";\nc.fillRect(player_x, player_y, player_w, player_h);\n// Hozd létre a játékos változókat!\n// A játékos változók sorban: mplayer_x, mplayer_y,\n// mplayer_w, mplayer_h.\n",
-		 lessonSection: "Nagy feladat 3: For ciklus használata",
-		},
-		{ message: "Valami hasonlót kaptál?",
-  	code: "var bg_x= 0;\nvar bg_y= 0;\nvar bg_w= 400;\nvar bg_h= 300;\nc.fillRect(bg_x, bg_y, bg_w, bg_h);\nvar player_x = 20;\nvar player_w = 20;\nvar player_h = 80;\nvar player_y = bg_h*0.5 - player_h*0.5;\nc.fillStyle = \"white\";\nc.fillRect(player_x, player_y, player_w, player_h);\n// Hozd létre a játékos változókat!\n// A játékos változók sorban: mplayer_x, mplayer_y,\n// mplayer_w, mplayer_h.\nvar mplayer_x = bg_w-20*2;\nvar mplayer_w = 20;\nvar mplayer_h = 80;\nvar mplayer_y = player_y;\nc.fillRect(mplayer_x, mplayer_y, mplayer_w, mplayer_h);",
-		},
-		{ message: "Kész van a második játékos. Most rajzold meg a felezővonalat szaggatott vonallal. A szaggatott vonal téglalapjai szélessége(hl_w) 4, magassága(hl_h) a step fele. A szaggatott vonal osztása (step) a háttér magasságának(bg_h) 30-ad része. Tipp: A for(var i; i< condition; i++){} ciklus segít a feladat megoldásában ",
-  	code: "var bg_x= 0;\nvar bg_y= 0;\nvar bg_w= 400;\nvar bg_h= 300;\nc.fillRect(bg_x, bg_y, bg_w, bg_h);\nvar player_x = 20;\nvar player_w = 20;\nvar player_h = 80;\nvar player_y = bg_h*0.5 - player_h*0.5;\nc.fillStyle = \"white\";\nc.fillRect(player_x, player_y, player_w, player_h);\nvar mplayer_x = bg_w-20*2;\nvar mplayer_w = 20;\nvar mplayer_h = 80;\nvar mplayer_y = player_y;\nc.fillRect(mplayer_x, mplayer_y, mplayer_w, mplayer_h);// Hozd létre a felezővonal változókat!\n// A felezővonal változók sorban: szélesség hl_w, magasság hl_h, lépésköz step.\n\n\n\n// Rajzold meg egy for ciklussal.\n",
-		},
-		{ message: "Valami hasonlót kaptál?",
-  	code: "var bg_x= 0;\nvar bg_y= 0;\nvar bg_w= 400;\nvar bg_h= 300;\nc.fillRect(bg_x, bg_y, bg_w, bg_h);\nvar player_x = 20;\nvar player_w = 20;\nvar player_h = 80;\nvar player_y = bg_h*0.5 - player_h*0.5;\nc.fillStyle = \"white\";\nc.fillRect(player_x, player_y, player_w, player_h);\n// Hozd létre a játékos változókat!\n// A játékos változók sorban: mplayer_x, mplayer_y,\n// mplayer_w, mplayer_h.\nvar mplayer_x = bg_w-20*2;\nvar mplayer_w = 20;\nvar mplayer_h = 80;\nvar mplayer_y = player_y;\nc.fillRect(mplayer_x, mplayer_y, mplayer_w, mplayer_h);\nvar hl_w =4;var step = bg_h/30;\nvar hl_h = step*0.5;\nvar hl_x =bg_w*0.5- hl_w*0.5;\n// Rajzold meg egy for ciklussal.\nfor(var i= 0; i < bg_h; i++){\n var hl_y =0 + i*step;\nc.fillRect(hl_x, hl_y, hl_w, hl_h);\n}\n",
-		},
-	{ message: "A háttér és a játékos készen van. A mostani feladatrészben két feladat lesz: a második játékos és a felező vonal megrajzolása. A második játékos változói sorban: mplayer_x, mplayer_y, mplayer_w és mplayer_h. A második játékos is 20 széles és 80 magas. A játékos 20-ra van a jobb széltől és szintén középen van.",
-		 code: "var bg_x= 0;\nvar bg_y= 0;\nvar bg_w= 400;\nvar bg_h= 300;\nc.fillRect(bg_x, bg_y, bg_w, bg_h);\nvar player_x = 20;\nvar player_w = 20;\nvar player_h = 80;\nvar player_y = bg_h*0.5 - player_h*0.5;\nc.fillStyle = \"white\";\nc.fillRect(player_x, player_y, player_w, player_h);\n// Hozd létre a játékos változókat!\n// A játékos változók sorban: mplayer_x, mplayer_y,\n// mplayer_w, mplayer_h.\n",
-		 lessonSection: "Nagy feladat 3: Függvények",
-		},
-		{ message: "Valami hasonlót kaptál?",
-  	code: "var bg_x= 0;\nvar bg_y= 0;\nvar bg_w= 400;\nvar bg_h= 300;\nc.fillRect(bg_x, bg_y, bg_w, bg_h);\nvar player_x = 20;\nvar player_w = 20;\nvar player_h = 80;\nvar player_y = bg_h*0.5 - player_h*0.5;\nc.fillStyle = \"white\";\nc.fillRect(player_x, player_y, player_w, player_h);\n// Hozd létre a játékos változókat!\n// A játékos változók sorban: mplayer_x, mplayer_y,\n// mplayer_w, mplayer_h.\nvar mplayer_x = bg_w-20*2;\nvar mplayer_w = 20;\nvar mplayer_h = 80;\nvar mplayer_y = player_y;\nc.fillRect(mplayer_x, mplayer_y, mplayer_w, mplayer_h);",
-		},
-		{ message: "Kész van a második játékos. Most rajzold meg a felezővonalat szaggatott vonallal. A szaggatott vonal téglalapjai szélessége(hl_w) 4, magassága(hl_h) a step fele. A szaggatott vonal osztása (step) a háttér magasságának(bg_h) 30-ad része. Tipp: A for(var i; i< condition; i++){} ciklus segít a feladat megoldásában ",
-  	code: "var bg_x= 0;\nvar bg_y= 0;\nvar bg_w= 400;\nvar bg_h= 300;\nc.fillRect(bg_x, bg_y, bg_w, bg_h);\nvar player_x = 20;\nvar player_w = 20;\nvar player_h = 80;\nvar player_y = bg_h*0.5 - player_h*0.5;\nc.fillStyle = \"white\";\nc.fillRect(player_x, player_y, player_w, player_h);\nvar mplayer_x = bg_w-20*2;\nvar mplayer_w = 20;\nvar mplayer_h = 80;\nvar mplayer_y = player_y;\nc.fillRect(mplayer_x, mplayer_y, mplayer_w, mplayer_h);// Hozd létre a felezővonal változókat!\n// A felezővonal változók sorban: szélesség hl_w, magasság hl_h, lépésköz step.\n\n\n\n// Rajzold meg egy for ciklussal.\n",
-		},
-		{ message: "Valami hasonlót kaptál?",
-  	code: "var bg_x= 0;\nvar bg_y= 0;\nvar bg_w= 400;\nvar bg_h= 300;\nc.fillRect(bg_x, bg_y, bg_w, bg_h);\nvar player_x = 20;\nvar player_w = 20;\nvar player_h = 80;\nvar player_y = bg_h*0.5 - player_h*0.5;\nc.fillStyle = \"white\";\nc.fillRect(player_x, player_y, player_w, player_h);\n// Hozd létre a játékos változókat!\n// A játékos változók sorban: mplayer_x, mplayer_y,\n// mplayer_w, mplayer_h.\nvar mplayer_x = bg_w-20*2;\nvar mplayer_w = 20;\nvar mplayer_h = 80;\nvar mplayer_y = player_y;\nc.fillRect(mplayer_x, mplayer_y, mplayer_w, mplayer_h);\nvar hl_w =4;var step = bg_h/30;\nvar hl_h = step*0.5;\nvar hl_x =bg_w*0.5- hl_w*0.5;\n// Rajzold meg egy for ciklussal.\nfor(var i= 0; i < bg_h; i++){\n var hl_y =0 + i*step;\nc.fillRect(hl_x, hl_y, hl_w, hl_h);\n}\n",
-		},
